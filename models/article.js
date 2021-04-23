@@ -1,0 +1,40 @@
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
+
+const articleSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String
+    },
+
+    description: {
+        type: String,
+    },
+    bodyArticle: {
+        type: String,
+    },
+    Owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    view: {
+        type: Number,
+        default: 0
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    lastUpdate: {
+        type: Date,
+        default: Date.now,
+    }
+
+})
+
+
+module.exports = mongoose.model('Article', articleSchema)

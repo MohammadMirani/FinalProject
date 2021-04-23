@@ -1,6 +1,8 @@
 const User = require('../../models/user')
 const Url = require('url')
 const bcrypt = require('bcrypt')
+const path = require('path')
+
 const fieldPattern = [
     "firstName",
     "lastName",
@@ -58,7 +60,8 @@ const register = (req, res) => {
             password: req.body.password,
             Email: req.body.Email,
             phoneNumber: req.body.phoneNumber,
-            sex: req.body.sex
+            sex: req.body.sex,
+            avatar : 'avatar.png'
 
         })
         newUser.save((err, user) => {

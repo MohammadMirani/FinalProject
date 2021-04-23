@@ -1,58 +1,58 @@
 let Dashboard = function () {
-	let global = {
-		tooltipOptions: {
-			placement: "right"
-		},
-		menuClass: ".c-menu"
-	};
+    let global = {
+        tooltipOptions: {
+            placement: "right"
+        },
+        menuClass: ".c-menu"
+    };
 
-	let menuChangeActive = function menuChangeActive(el) {
-		let hasSubmenu = $(el).hasClass("has-submenu");
-		$(global.menuClass + " .is-active").removeClass("is-active");
-		$(el).addClass("is-active");
+    let menuChangeActive = function menuChangeActive(el) {
+        let hasSubmenu = $(el).hasClass("has-submenu");
+        $(global.menuClass + " .is-active").removeClass("is-active");
+        $(el).addClass("is-active");
 
-	};
+    };
 
-	let sidebarChangeWidth = function sidebarChangeWidth() {
-		let $menuItemsTitle = $("li .menu-item__title");
+    let sidebarChangeWidth = function sidebarChangeWidth() {
+        let $menuItemsTitle = $("li .menu-item__title");
 
-		$("body").toggleClass("sidebar-is-reduced sidebar-is-expanded");
-		$(".hamburger-toggle").toggleClass("is-opened");
+        $("body").toggleClass("sidebar-is-reduced sidebar-is-expanded");
+        $(".hamburger-toggle").toggleClass("is-opened");
 
-		if ($("body").hasClass("sidebar-is-expanded")) {
-			$('[data-toggle="tooltip"]').tooltip("destroy");
-		} else {
-			$('[data-toggle="tooltip"]').tooltip(global.tooltipOptions);
-		}
-	};
+        if ($("body").hasClass("sidebar-is-expanded")) {
+            $('[data-toggle="tooltip"]').tooltip("destroy");
+        } else {
+            $('[data-toggle="tooltip"]').tooltip(global.tooltipOptions);
+        }
+    };
 
-	return {
-		init: function init() {
-			$(".js-hamburger").on("click", sidebarChangeWidth);
+    return {
+        init: function init() {
+            $(".js-hamburger").on("click", sidebarChangeWidth);
 
-			$(".js-menu li").on("click", function (e) {
-				menuChangeActive(e.currentTarget);
-			});
+            $(".js-menu li").on("click", function (e) {
+                menuChangeActive(e.currentTarget);
+            });
 
-			$('[data-toggle="tooltip"]').tooltip(global.tooltipOptions);
-		}
-	};
+            $('[data-toggle="tooltip"]').tooltip(global.tooltipOptions);
+        }
+    };
 }();
 
 Dashboard.init();
 
 function changeTab(id) {
-	let page = id.title;
-	$('.mainContainer').addClass('d-none');
-	$(`.${page}`).removeClass('d-none');
-} 
+    let page = id.title;
+    $('.mainContainer').addClass('d-none');
+    $(`.${page}`).removeClass('d-none');
+}
 
 function editFunc() {
-	$( '.updateForm' ).prop( "disabled", false );
-	$( '#submitBtn' ).prop( "disabled", false );
+    $('.updateForm').prop("disabled", false);
+    $('#submitBtn').prop("disabled", false);
 
-	$('#sex').remove();
-	$('.sex').removeClass('d-none');
+    $('#sex').remove();
+    $('.sex').removeClass('d-none');
 
 }
 
@@ -128,3 +128,27 @@ function validUpdateForm() {
     if (count !== 0) return false
 
 }
+
+
+function validAvatar() {
+    let avatar = $('.avatarInput').val()
+    if(!avatar){
+        alert("empty avatar")
+       return false
+    }
+}
+
+// function ReadArticle(id) {
+//     $.ajax({
+//         type: "GET",
+//         url: `/article/getSingleArticle/${id}`,
+//         success: function (response) {
+//                 console.log(12);
+//         }
+//     });
+// }
+
+// function DeleteArticle(id) {
+//     console.log(id);
+    
+// }

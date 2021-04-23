@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
   <style class="cp-pen-styles">
@@ -30,16 +31,40 @@
           <div class="hamburger-toggle"><span class="bar-top"></span><span class="bar-mid"></span><span
               class="bar-bot"></span></div>
         </div>
-        <div class="c-header-icon has-dropdown"><span class="c-badge c-badge--header-icon animated shake">12</span><i
-            class="fa fa-bell"></i>
-          <div class="c-dropdown c-dropdown--notifications">
-            <div class="c-dropdown__header"></div>
-            <div class="c-dropdown__content"></div>
-          </div>
-        </div>
+
+        <a href="">
+
+          <a href="/article/getallarticle">
+            <div class="c-header-icon has-dropdown "> <span
+                class="c-badge c-badge--header-icon animated bg-primary">Home
+                Page</span> <i class="fas fa-home" style="font-size: large;"></i>
+              <div class="c-dropdown c-dropdown--notifications">
+                <div class="c-dropdown__header"></div>
+                <div class="c-dropdown__content"></div>
+              </div>
+            </div>
+
+          </a>
+
+          <a href="/article/createArticlePage">
+            <div class="c-header-icon has-dropdown "> <i class="far fa-file m-2"></i><span
+                class="c-badge c-badge--header-icon animated bg-success">Add Article</span> <i class="fas fa-plus"
+                style="font-size: small;"></i>
+              <div class="c-dropdown c-dropdown--notifications">
+                <div class="c-dropdown__header"></div>
+                <div class="c-dropdown__content"></div>
+              </div>
+            </div>
+          </a>
+
+
+        </a>
+
+
         <div class="c-search">
           <input class="c-search__input u-input" placeholder="Search..." type="text" />
         </div>
+
         <div class="header-icons-group">
           <div class="c-header-icon logout">
             <a href="/user/logout" class="link-secondary">Logout <i class="fa fa-power-off"></i></a>
@@ -58,7 +83,7 @@
           <ul class="u-list">
             <li class="c-menu__item is-active" data-bs-toggle="tooltip" onclick="changeTab(this)" title="Articles">
               <div class="c-menu__item__inner"><i class="fa fa-file-text-o"></i>
-                <div class="c-menu-item__title"><span>Articles</span></div>
+                <div class="c-menu-item__title"><span>My Articles</span></div>
               </div>
             </li>
             <li class="c-menu__item has-submenu" data-bs-toggle="tooltip" onclick="changeTab(this)" title="Profile">
@@ -94,228 +119,47 @@
 
       <!-- Article Block -->
       <div class="list-group Articles mainContainer p-2">
-        <a href="#" class="list-group-item">
-          <div class="media col-md-3">
-            <figure class="pull-left">
-              <img class="media-object img-rounded img-responsive" src="http://placehold.it/140x100"
-                alt="placehold.it/140x100">
-            </figure>
-          </div>
-          <div class="col-md-5">
-            <h4 class="list-group-item-heading pb-3"> Olympic </h4>
-            <p class="list-group-item-text"> Proposal to implement best in class enterprise permissioning system to
-              manage
-              signature accumulation and hierarchy management</p>
-          </div>
-          <div class="col-md-3 pull-left">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> General Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Project Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-square"></i> Tech Lead</div>
-              </div>
+        <% for(let  i= articles.length-1 ; i >= 0; i--){ %>
+        <div class="list-group Articles mainContainer p-2">
+          <a href="#" class="list-group-item">
+            <div class="media col-md-3">
+              <figure class="pull-left mx-1">
+                <img class="media-object img-rounded img-responsive" height="150" width="150"
+                  src="/images/article/<%= articles[i].image %>">
+              </figure>
             </div>
-          </div>
-          <div class="col-md-1 text-center">
-            <p> 2 <small> approvals </small></p>
-            <button type="button" class="btn btn-primary btn-sm btn-block">Open</button>
-          </div>
-        </a>
-        <a href="#" class="list-group-item">
-          <div class="media col-md-3">
-            <figure class="pull-left">
-              <img class="media-object img-rounded img-responsive" src="http://placehold.it/140x100"
-                alt="placehold.it/140x100">
-            </figure>
-          </div>
-          <div class="col-md-5">
-            <h4 class="list-group-item-heading pb-3"> Olympic </h4>
-            <p class="list-group-item-text"> Proposal to implement best in class enterprise permissioning system to
-              manage
-              signature accumulation and hierarchy management</p>
-          </div>
-          <div class="col-md-3 pull-left">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> General Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Project Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-square"></i> Tech Lead</div>
-              </div>
+            <div class="col-md-5 ">
+              <h4 class="list-group-item-heading pb-3 "> <%= articles[i].title %> </h4>
+              <p class="list-group-item-text"><%= articles[i].description %> . . .</p>
             </div>
-          </div>
-          <div class="col-md-1 text-center">
-            <p> 2 <small> approvals </small></p>
-            <button type="button" class="btn btn-primary btn-sm btn-block">Open</button>
-          </div>
-        </a>
-        <a href="#" class="list-group-item">
-          <div class="media col-md-3">
-            <figure class="pull-left">
-              <img class="media-object img-rounded img-responsive" src="http://placehold.it/140x100"
-                alt="placehold.it/140x100">
-            </figure>
-          </div>
-          <div class="col-md-5">
-            <h4 class="list-group-item-heading pb-3"> Olympic </h4>
-            <p class="list-group-item-text"> Proposal to implement best in class enterprise permissioning system to
-              manage
-              signature accumulation and hierarchy management</p>
-          </div>
-          <div class="col-md-3 pull-left">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> General Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Project Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-square"></i> Tech Lead</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-1 text-center">
-            <p> 2 <small> approvals </small></p>
-            <button type="button" class="btn btn-primary btn-sm btn-block">Open</button>
-          </div>
-        </a>
 
-        <a href="#" class="list-group-item">
-          <div class="media col-md-3">
-            <figure class="pull-left">
-              <img class="media-object img-rounded img-responsive" src="http://placehold.it/140x100"
-                alt="placehold.it/140x100">
-            </figure>
-          </div>
-          <div class="col-md-5">
-            <h4 class="list-group-item-heading pb-3"> Olympic </h4>
-            <p class="list-group-item-text"> Proposal to implement best in class enterprise permissioning system to
-              manage
-              signature accumulation and hierarchy management</p>
-          </div>
-          <div class="col-md-3 pull-left">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> General Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Project Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-square"></i> Tech Lead</div>
+
+
+            <div class="d-grid gap-2 d-md-block container pt-4">
+              <div class="row justify-content-start">
+
+                <form action="/article/getSingleArticle/<%= articles[i]._id %>" method="GET" target="_blank"
+                  class="col-md-2">
+                  <button type="submit" class="btn-sm btn-info ">Read More</button>
+                </form>
+
+                <form action="/article/editArticlePage/<%= articles[i]._id %>" method="GET" class="col-md-2">
+                  <button type="submit" class="btn-sm btn-warning">Edit Article</button>
+                </form>
+
+                <form action="/article/deleteSingleArticle/<%= articles[i]._id %>" method="POST" class="col-md-3"
+                  onsubmit=" return DeleteArticle()">
+                  <button type="submit" class="btn-sm btn-danger ">Delete Article</button>
+                </form>
+
               </div>
             </div>
-          </div>
-          <div class="col-md-1 text-center">
-            <p> 2 <small> approvals </small></p>
-            <button type="button" class="btn btn-primary btn-sm btn-block">Open</button>
-          </div>
-        </a>
 
-        <a href="#" class="list-group-item">
-          <div class="media col-md-3">
-            <figure class="pull-left">
-              <img class="media-object img-rounded img-responsive" src="http://placehold.it/140x100"
-                alt="placehold.it/140x100">
-            </figure>
-          </div>
-          <div class="col-md-5">
-            <h4 class="list-group-item-heading pb-3"> Olympic </h4>
-            <p class="list-group-item-text"> Proposal to implement best in class enterprise permissioning system to
-              manage
-              signature accumulation and hierarchy management</p>
-          </div>
-          <div class="col-md-3 pull-left">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> General Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Project Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-square"></i> Tech Lead</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-1 text-center">
-            <p> 2 <small> approvals </small></p>
-            <button type="button" class="btn btn-primary btn-sm btn-block">Open</button>
-          </div>
-        </a>
 
-        <a href="#" class="list-group-item">
-          <div class="media col-md-3">
-            <figure class="pull-left">
-              <img class="media-object img-rounded img-responsive" src="http://placehold.it/140x100"
-                alt="placehold.it/140x100">
-            </figure>
-          </div>
-          <div class="col-md-5">
-            <h4 class="list-group-item-heading pb-3"> Olympic </h4>
-            <p class="list-group-item-text"> Proposal to implement best in class enterprise permissioning system to
-              manage
-              signature accumulation and hierarchy management</p>
-          </div>
-          <div class="col-md-3 pull-left">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> General Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Project Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-square"></i> Tech Lead</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-1 text-center">
-            <p> 2 <small> approvals </small></p>
-            <button type="button" class="btn btn-primary btn-sm btn-block">Open</button>
-          </div>
-        </a>
+          </a>
 
-        <a href="#" class="list-group-item">
-          <div class="media col-md-3">
-            <figure class="pull-left">
-              <img class="media-object img-rounded img-responsive" src="http://placehold.it/140x100"
-                alt="placehold.it/140x100">
-            </figure>
-          </div>
-          <div class="col-md-5">
-            <h4 class="list-group-item-heading pb-3"> Olympic </h4>
-            <p class="list-group-item-text"> Proposal to implement best in class enterprise permissioning system to
-              manage
-              signature accumulation and hierarchy management</p>
-          </div>
-          <div class="col-md-3 pull-left">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> General Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Project Manager</div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pull-left"><i class="fa fa-square"></i> Tech Lead</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-1 text-center">
-            <p> 2 <small> approvals </small></p>
-            <button type="button" class="btn btn-primary btn-sm btn-block">Open</button>
-          </div>
-        </a>
-
+        </div>
+        <% } %>
 
       </div>
 
@@ -327,11 +171,39 @@
             <div class="col-md-8 ">
               <div class="card ">
                 <div class="card-header">Update Profile</div>
-                <div class="card-body ">
+                <div class="card-body fs-5">
+                  <div class="row">
 
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                          <img src="/images/avatars/<%=user.avatar %>" alt="" class="rounded-circle" width="150"
+                            height="150">
+                          <div class="mt-3">
+                            <h4><%= user.firstName  + " "+ user.lastName%></h4>
+                            <p class="text-secondary mb-1"> You are <b><%= user.role %></b> </p>
+                            <form action="/user/avatar" method="post" onsubmit="return validAvatar()"
+                              enctype="multipart/form-data">
+                              <div class="mb-3">
+                                <input class="form-control avatarInput" name="avatar" type="file" id="formFile">
+                              </div>
+                              <button type="submit" class="btn btn-outline-primary">Save Profile</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
                   <form class="" name="my-form" onsubmit="return validUpdateForm()" action="/user/editProfile"
                     method="POST">
-                    <h1 class="text-success fw-bold">You are <%= user.role %></h1>
+                    <div class="col-md-6 mb-4">
+
+                      <h1 class="text-success fw-bold"></h1>
+
+                    </div>
 
                     <div class="form-group row p-2">
                       <label for="firstName " class=" col-md-3 col-form-label text-md-right">First
@@ -455,25 +327,25 @@
 
                   </form>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
 
-      <div class="Users d-none mainContainer">
-        <h1>users</h1>
-      </div>
+    <div class="Users d-none mainContainer">
+      <h1>users</h1>
+    </div>
 
     </div>
 
   </main>
 
 
-  <script
-    src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'>
-  </script>
+
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
   <script src='https://use.fontawesome.com/2188c74ac9.js'></script>
   <script src="/javascripts/dashboard-main.js"></script>

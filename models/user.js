@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt')
 
-
 essentialItems = {
     required: true,
     type: String,
@@ -70,7 +69,7 @@ const UserSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['superAdmin','admin', 'blogger'],
+        enum: ['superAdmin', 'admin', 'blogger'],
         default: 'blogger'
     },
     createdAt: {
@@ -81,6 +80,9 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    avatar: {
+        type: String
+    }
 })
 
 UserSchema.methods.toJSON = function () {
@@ -89,7 +91,6 @@ UserSchema.methods.toJSON = function () {
     delete user.password;
     delete user.__v;
     return user;
-
 }
 
 UserSchema.pre('save', function (next) {
@@ -109,4 +110,4 @@ UserSchema.pre('save', function (next) {
 
 })
 
-module.exports = mongoose.model('user', UserSchema)
+module.exports = mongoose.model('User', UserSchema)
