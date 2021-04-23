@@ -48,7 +48,7 @@ const createArticle = (req, res) => {
 const getSingleArticle = (req, res) => {
     Article.findOne({
         _id: req.params.articleId
-    }, (err, article) => {
+    }).populate('Owner').exec( (err, article) => {
         if (err) return res.status(500).send("server error :(")
         req.session.article = article;
         console.log(req.session);
