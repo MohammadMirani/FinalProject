@@ -57,7 +57,6 @@
             </div>
           </a>
 
-
         </a>
 
 
@@ -74,14 +73,14 @@
     </header>
 
     <!-- SlideBar  -->
-    <div class="l-sidebar fixed-top" style="position: fixed;">
-      <div class="logo">
+    <div class="l-sidebar fixed-top bg-dark" style="position: fixed;">
+      <div class="logo bg-dark">
         <div class="logo__txt">Hi <%= user.userName %> </div>
       </div>
-      <div class="l-sidebar__content">
+      <div class="l-sidebar__content bg-dark">
         <nav class="c-menu js-menu">
           <ul class="u-list">
-            <li class="c-menu__item is-active"  onclick="changeTab(this)" title="Articles">
+            <li class="c-menu__item is-active" data-bs-toggle="tooltip" onclick="changeTab(this)" title="Articles">
               <div class="c-menu__item__inner"><i class="fa fa-file-text-o"></i>
                 <div class="c-menu-item__title"><span>My Articles</span></div>
               </div>
@@ -89,6 +88,11 @@
             <li class="c-menu__item has-submenu" data-bs-toggle="tooltip" onclick="changeTab(this)" title="Profile">
               <div class="c-menu__item__inner"><i class="fa fa-user"></i>
                 <div class="c-menu-item__title"><span>Profile</span></div>
+              </div>
+            </li>
+            <li class="c-menu__item has-submenu" data-bs-toggle="tooltip" onclick="changeTab(this)" title="Users">
+              <div class="c-menu__item__inner"><i class="fa fa-users"></i>
+                <div class="c-menu-item__title"><span>Users</span></div>
               </div>
             </li>
             <li class="c-menu__item has-submenu" data-bs-toggle="tooltip" onclick="changeTab(this)"
@@ -107,7 +111,6 @@
       </div>
     </div>
   </div>
-
 
   <main class="l-main ">
     <div class="content-wrapper content-wrapper--with-bg p-0">
@@ -156,6 +159,7 @@
                   </li>
                 </ul>
 
+                
               </div>
             </div>
 
@@ -338,9 +342,59 @@
         </div>
       </div>
 
+      <div class="mainContainer Users d-none">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">firstName</th>
+              <th scope="col">lastName</th>
+              <th scope="col">userName</th>
+              <th scope="col">Email</th>
+              <th scope="col">phoneNumber</th>
+              <th scope="col">role</th>
+            </tr>
+          </thead>
+
+          <tbody></tbody>
+          <% for (let i = 0 ; i< users.length ; i++){ %>
+          <tr data-bs-toggle="modal" data-bs-target="#userModal" onclick="ShowUsers('<%= users[i]._id %>')">
+            <th scope="row"><%=i+1 %></th>
+            <td><%=users[i].firstName %></td>
+            <td><%=users[i].lastName %></td>
+            <td><%=users[i].userName %></td>
+            <td><%=users[i].Email %></td>
+            <td><%= users[i].phoneNumber %></td>
+            <td><%= users[i].role %></td>
+          </tr>
+          <% }%>
+
+          </tbody>
+        </table>
+
+        <!-- Modal -->
+        <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">User Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   </main>
+
+
 
 
 

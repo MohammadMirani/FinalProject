@@ -48,18 +48,40 @@ const createArticle = (req, res) => {
 const getSingleArticle = (req, res) => {
     Article.findOne({
         _id: req.params.articleId
-    }).populate('Owner').exec( (err, article) => {
+    }).populate('Owner').exec((err, article) => {
         if (err) return res.status(500).send("server error :(")
         req.session.article = article;
         console.log(req.session);
         user = req.session.user;
-        Comment.find({Article : req.session.article._id}).populate('Owner').exec((err, comment) => {
+        Comment.find({
+            Article: req.session.article._id
+        }).populate('Owner').exec((err, comment) => {
             if (err) return res.status(500).send("server error :(")
-            return res.render('article/articlePage', {
-                user,
-                article,
-                comment
-            })
+
+            if (req.session.user) {
+                if (req.session.user.role === "admin") {
+                    return res.render('article/admin-articlePage', {
+                        user,
+                        article,
+                        comment
+                    })
+                } else {
+                    return res.render('article/articlePage', {
+                        user,
+                        article,
+                        comment
+                    })
+                }
+            } else {
+
+                return res.render('article/articlePage', {
+                    user,
+                    article,
+                    comment
+                })
+            }
+
+
         })
 
     })
@@ -119,12 +141,37 @@ const getAllArticle = (req, res) => {
         console.log(articles);
         if (err) return res.status(500).send("server error :(")
 
-        return res.render('article/allarticle', {
-            articles
-        })
+        if (req.session.user) {
+            if (req.session.user.role === "admin") {
+                return res.render('article/admin-allarticle', {
+                    articles
+                })
+            } else {
+                return res.render('article/allarticle', {
+                    articles
+                })
+
+            }
+        } else {
+
+            return res.render('article/allarticle', {
+                articles
+            })
+        }
 
     })
 }
+
+const deleteArticleByAdmin = (req, res) => {
+    Article.findOneAndDelete({
+        _id: req.params.articleId
+    }, (err, deletedArticle) => {
+        if (err) return res.status(500).send("server error :(")
+        return res.redirect('/article/getAllArticle')
+    })
+}
+
+
 
 module.exports = {
     createArticlePage,
@@ -133,5 +180,6 @@ module.exports = {
     deleteSingleArticle,
     editArticlePage,
     editArticle,
-    getAllArticle
+    getAllArticle,
+    deleteArticleByAdmin
 }

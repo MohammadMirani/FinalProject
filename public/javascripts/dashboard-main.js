@@ -132,23 +132,61 @@ function validUpdateForm() {
 
 function validAvatar() {
     let avatar = $('.avatarInput').val()
-    if(!avatar){
+    if (!avatar) {
         alert("empty avatar")
-       return false
+        return false
     }
 }
 
-// function ReadArticle(id) {
-//     $.ajax({
-//         type: "GET",
-//         url: `/article/getSingleArticle/${id}`,
-//         success: function (response) {
-//                 console.log(12);
-//         }
-//     });
-// }
+function ShowUsers(userID) {
+    $.ajax({
+        type: "GET",
+        url: `/user/getSingleUser/${userID}`,
+        success: function (response) {
+            console.log(response);
+            user = response;
+            let html = "";
+            html = `<button type="button" class="btn btn-danger" Onclick="deleteFun('${userID}')">delete User</button>
+                        <button type="button" class="btn btn-warning">Reset Password</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                        `;
 
-// function DeleteArticle(id) {
-//     console.log(id);
-    
-// }
+            $('.modal-footer').html(html);
+
+            let html2 = `
+                            <p>first Name: <span> ${user.firstName }</span></p>
+                            <p>last Name: <span>${user.lastName}</span> </p>
+                            <p>username: <span>${user.userName}</span> </p>
+                            <p>Email: <span>${user.Email}</span></p>
+                            <p>phoneNumber: <span>${user.phoneNumber}</span> </p>
+                            <p>role: <span>${user.role}</span></p>
+                        `
+            $('.modal-body').html(html2);
+        }
+    });
+
+}
+
+
+
+function deleteFun(userID) {
+    console.log(userID);
+    $.ajax({
+        type: "DELETE",
+        url: `/user/deleteUser/${userID}`,
+        success: function (response) {
+            let html = `<div class="alert alert-success w-100" role="alert">
+                            User Deleted successfully
+                        </div>`
+            $('.modal-footer').html(html);
+
+            
+            setTimeout(() => {
+                console.log(response);
+                location.reload()
+            }, 1500);
+
+        }
+    });
+
+}

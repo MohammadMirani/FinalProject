@@ -10,11 +10,20 @@ const createComment = (req, res) => {
 
     newComment.save((err, comment) => {
         if (err) return res.status(500).send('server error :(')
-        res.redirect(`/article/getSingleArticle/${req.session.article._id}`)
+        return res.redirect(`/article/getSingleArticle/${req.session.article._id}`)
     })
 }
 
+const deleteComment =(req, res)=>{
+    Comment.findOneAndDelete({
+        _id: req.params.commentId
+    }, (err, deletedComment) => {
+        if (err) return res.status(500).send("server error :(")
+        return res.redirect(`/article/getSingleArticle/${req.session.article._id}`)
+    })
+}
 
 module.exports = {
-    createComment
+    createComment,
+    deleteComment
 }

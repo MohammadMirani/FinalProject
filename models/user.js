@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const Article = require('../models/article')
+const Comment = require('../models/comment')
 const bcrypt = require('bcrypt')
 
 essentialItems = {
@@ -60,16 +62,15 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        validate(value) {
-            if (value.match(/\d/g).length !== value.length) {
-                throw new Error("Mobile Number should be number.")
-            }
-
-        }
+        // validate(value) {
+        //     if (value.match(/\d/g).length !== value.length) {
+        //         throw new Error("Mobile Number should be number.")
+        //     }
+        // }
     },
     role: {
         type: String,
-        enum: ['superAdmin', 'admin', 'blogger'],
+        enum: ['admin', 'blogger'],
         default: 'blogger'
     },
     createdAt: {
@@ -107,6 +108,33 @@ UserSchema.pre('save', function (next) {
     } else {
         return next();
     };
+
+})
+
+// UserSchema.post('remove', function (doc) {
+
+//     Comment.deleteMany({Owner: doc._id})
+//     Article.deleteMany({Owner: doc._id})
+
+// })
+
+UserSchema.pre('findOneAndDelete', function (next) {
+    let userID = this._conditions._id
+    next();
+    Comment.deleteMany({
+        Owner: userID
+    }).then(() => {
+        return console.log("comments are deleted");
+    }).catch(() => {
+        return next(new Error(err))
+    })
+    Article.deleteMany({
+        Owner: userID
+    }).then(() => {
+        return console.log("Articles are deleted");
+    }).catch(() => {
+        return next(new Error(err))
+    })
 
 })
 

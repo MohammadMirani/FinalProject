@@ -44,6 +44,7 @@
     </div>
   </nav>
 
+
   <div class="list-group Articles mainContainer p-2">
     <% for(let  i= articles.length-1 ; i >= 0; i--){ %>
     <div class="list-group Articles mainContainer p-2">
@@ -61,6 +62,7 @@
 
         <div class="d-grid gap-2 d-md-block container p-0 m-0">
           <div class="row justify-content-start">
+
             <ul class="list-inline m-0">
               <li class="list-inline-item">
 
@@ -72,6 +74,13 @@
                 </form>
               </li>
 
+              <li class="list-inline-item">
+                <form action="/article/deleteArticleByAdmin/<%= articles[i]._id %>" method="POST" 
+                  class="col-md-2">
+                  <button class="btn btn-danger btn-sm rounded-0" type="submit" data-toggle="tooltip"
+                    data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                </form>
+              </li>
             </ul>
 
           </div>

@@ -61,7 +61,7 @@ const register = (req, res) => {
             Email: req.body.Email,
             phoneNumber: req.body.phoneNumber,
             sex: req.body.sex,
-            avatar : 'avatar.png'
+            avatar: 'avatar.png'
 
         })
         newUser.save((err, user) => {
@@ -121,6 +121,8 @@ const login = (req, res) => {
             }))
         }
 
+
+
         bcrypt.compare(req.body.password, user.password, function (err, isMatch) {
             if (err) {
                 return res.redirect(Url.format({
@@ -139,8 +141,7 @@ const login = (req, res) => {
                 }))
             }
 
-
-            req.session.user = user
+            req.session.user = user;
             return res.redirect(Url.format({
                 pathname: "/user/dashboard"
 
@@ -174,7 +175,7 @@ const createAdmin = async (req, res) => {
             lastName: req.body.lastName,
             userName: req.body.userName,
             password: req.body.password,
-            Email : req.body.Email,
+            Email: req.body.Email,
             role: "admin",
             sex: req.body.sex,
             phoneNumber: req.body.phoneNumber

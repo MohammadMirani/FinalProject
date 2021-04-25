@@ -5,24 +5,34 @@ const fs = require('fs')
 const path = require('path')
 const Article = require('../../models/article')
 const generalTools = require('../../tools/general-tools')
+const user = require('../../models/user')
 
 
 const dashboard = (req, res) => {
-    user = req.session.user;
 
+    const user = req.session.user;
     Article.find({
         Owner: req.session.user._id
     }, (err, articles) => {
         if (err) return res.status(500).send("server error :(")
-   
-        // articles = JSON.stringify(articles)
-        return res.render('user/dashboard', {
-           user, articles
-        })
-
+        if (user.role === "admin") {
+            User.find({
+                role: "blogger"
+            }, (err, users) => {
+                if (err) return res.status(500).send("Server Error :(")
+                return res.render('user/admin-dashboard', {
+                    user,
+                    users,
+                    articles
+                })
+            })
+        } else {
+            return res.render('user/dashboard', {
+                user,
+                articles
+            })
+        }
     })
-
- 
 }
 
 const editProfile = (req, res) => {
@@ -68,7 +78,7 @@ const avatar = (req, res) => {
                     return res.status(500).send("server error")
                 } else {
                     console.log(req.session.user.avatar);
-                    if (req.session.user.avatar && req.session.user.avatar !=="avatar.png" ) {
+                    if (req.session.user.avatar && req.session.user.avatar !== "avatar.png") {
                         console.log(req.session.user.avatar);
                         fs.unlink(path.join(__dirname, `../../public/images/avatars/${req.session.user.avatar}`), err => {
                             if (err) {
@@ -91,15 +101,37 @@ const avatar = (req, res) => {
     })
 }
 
-const logout = (req, res, next) => {
+const logout = (req, res) => {
     req.session.destroy();
     res.clearCookie('user_sid')
     res.redirect('/auth/loginPage')
+}
+
+const deleteUser = (req, res) => {
+
+    User.findOneAndDelete({
+        _id: req.params.userId
+    }, (err) => {
+        if (err) return res.status(500).send("server error")
+        return res.status(200).send("User is deleted")
+
+    })
+}
+
+const getSingleUser = (req, res) => {
+    User.findOne({
+        _id: req.params.userId
+    }, (err, user) => {
+        if (err) return res.status(500).send("server error")
+        return res.status(200).send(user)
+    })
 }
 
 module.exports = {
     dashboard,
     logout,
     editProfile,
-    avatar
+    avatar,
+    deleteUser,
+    getSingleUser
 }
