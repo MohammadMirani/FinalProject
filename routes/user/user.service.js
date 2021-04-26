@@ -77,9 +77,8 @@ const avatar = (req, res) => {
                 if (err) {
                     return res.status(500).send("server error")
                 } else {
-                    console.log(req.session.user.avatar);
                     if (req.session.user.avatar && req.session.user.avatar !== "avatar.png") {
-                        console.log(req.session.user.avatar);
+
                         fs.unlink(path.join(__dirname, `../../public/images/avatars/${req.session.user.avatar}`), err => {
                             if (err) {
                                 return res.status(500).send("server error")
@@ -127,11 +126,28 @@ const getSingleUser = (req, res) => {
     })
 }
 
+
+const changePassword = (req, res) => {
+    let salt = bcrypt.genSaltSync(10);
+    let hash = bcrypt.hashSync(req.body.password, salt);
+
+    User.findOneAndUpdate({
+        _id: req.body.userId
+    }, {
+        password: hash
+    }, (err, doc)=>{
+        if (err) return res.status(500).send("server error")
+        return res.status(200).send("Password is updated")
+    })
+
+}
+
 module.exports = {
     dashboard,
     logout,
     editProfile,
     avatar,
     deleteUser,
-    getSingleUser
+    getSingleUser,
+    changePassword
 }

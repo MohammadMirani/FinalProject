@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const Article = require('../models/article')
 const Comment = require('../models/comment')
+const fs =  require('fs')
+const path = require('path')
 const bcrypt = require('bcrypt')
 
 essentialItems = {
@@ -111,31 +113,52 @@ UserSchema.pre('save', function (next) {
 
 })
 
-// UserSchema.post('remove', function (doc) {
 
-//     Comment.deleteMany({Owner: doc._id})
-//     Article.deleteMany({Owner: doc._id})
 
-// })
+UserSchema.pre('findOneAndDelete', async function (next) {
 
-UserSchema.pre('findOneAndDelete', function (next) {
     let userID = this._conditions._id
-    next();
     Comment.deleteMany({
         Owner: userID
     }).then(() => {
-        return console.log("comments are deleted");
-    }).catch(() => {
+
+        return next() 
+    }).catch(()=>{
         return next(new Error(err))
     })
-    Article.deleteMany({
+
+    await Article.find({Owner : userID },(err, articles)=>{
+        for(let i = 0; i< articles.length ; i++){
+            fs.unlink(path.join(__dirname,`../public/images/article/${articles[i].image}`),(err)=>{
+                return next()
+            })
+        }
+    })
+
+     Article.deleteMany({
         Owner: userID
     }).then(() => {
-        return console.log("Articles are deleted");
+         return next() 
     }).catch(() => {
         return next(new Error(err))
     })
 
+
 })
+
+UserSchema.post('findOneAndDelete',function (doc, next){
+
+    if(doc.avatar !== "avatar.png"){
+        fs.unlink(path.join(__dirname, `../public/images/avatars/${doc.avatar}`),(err)=>{
+            if(err) return next();
+            next();
+        })    
+
+    }else{
+        return next()
+    }
+
+})
+
 
 module.exports = mongoose.model('User', UserSchema)

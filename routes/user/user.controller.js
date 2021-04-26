@@ -8,7 +8,8 @@ const {
     editProfile,
     avatar,
     deleteUser,
-    getSingleUser
+    getSingleUser,
+    changePassword
 } = require('./user.service')
 
 Router.get('/dashboard', generalTools.loginChecker,dashboard)
@@ -17,5 +18,7 @@ Router.get('/logout',logout)
 Router.post('/avatar', generalTools.loginChecker, avatar)
 Router.get('/getSingleUser/:userId', generalTools.loginChecker, getSingleUser)
 Router.delete('/deleteUser/:userId', generalTools.adminChecker, deleteUser)
+Router.post('/ChangePassword', generalTools.adminChecker, changePassword)
+
 
 module.exports = Router;

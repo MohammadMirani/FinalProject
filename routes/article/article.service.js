@@ -1,9 +1,11 @@
 const multer = require('multer')
 const path = require('path')
+const fs = require('fs')
 const User = require('../../models/user')
 const Comment = require('../../models/comment')
 const Article = require('../../models/article')
 const generalTools = require('../../tools/general-tools')
+const { nextTick } = require('process')
 
 
 
@@ -138,7 +140,6 @@ const editArticle = (req, res) => {
 }
 const getAllArticle = (req, res) => {
     Article.find({}, (err, articles) => {
-        console.log(articles);
         if (err) return res.status(500).send("server error :(")
 
         if (req.session.user) {
@@ -150,10 +151,8 @@ const getAllArticle = (req, res) => {
                 return res.render('article/allarticle', {
                     articles
                 })
-
             }
         } else {
-
             return res.render('article/allarticle', {
                 articles
             })
@@ -173,6 +172,8 @@ const deleteArticleByAdmin = (req, res) => {
 
 
 
+
+
 module.exports = {
     createArticlePage,
     createArticle,
@@ -181,5 +182,6 @@ module.exports = {
     editArticlePage,
     editArticle,
     getAllArticle,
-    deleteArticleByAdmin
+    deleteArticleByAdmin,
+
 }

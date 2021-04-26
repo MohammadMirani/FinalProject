@@ -138,6 +138,8 @@ function validAvatar() {
     }
 }
 
+////// for admin page
+
 function ShowUsers(userID) {
     $.ajax({
         type: "GET",
@@ -147,7 +149,7 @@ function ShowUsers(userID) {
             user = response;
             let html = "";
             html = `<button type="button" class="btn btn-danger" Onclick="deleteFun('${userID}')">delete User</button>
-                        <button type="button" class="btn btn-warning">Reset Password</button>
+                        <button type="button" class="btn btn-warning" Onclick="resetFun('${userID}')">Change Password</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
                         `;
 
@@ -170,7 +172,6 @@ function ShowUsers(userID) {
 
 
 function deleteFun(userID) {
-    console.log(userID);
     $.ajax({
         type: "DELETE",
         url: `/user/deleteUser/${userID}`,
@@ -179,10 +180,60 @@ function deleteFun(userID) {
                             User Deleted successfully
                         </div>`
             $('.modal-footer').html(html);
-
-            
             setTimeout(() => {
-                console.log(response);
+                location.reload()
+            }, 1500);
+        }
+    });
+}
+
+function resetFun(userID) {
+
+    let html = "";
+    html = `<div class="row g-3 align-items-center">
+                <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label">Password</label>
+                </div>
+                <div class="col-auto">
+                <input type="text" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                </div>
+                <div class="col-auto">
+                <span id="passwordHelpInline" class="form-text">
+                    Must be 8-20 characters long.
+                </span>
+                </div>
+            </div>`
+    $('.modal-body').html(html);
+
+    html = `<button type="button" class="btn btn-success" Onclick="changePassword('${userID}')">Reset Password</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+            `;
+
+    $('.modal-footer').html(html);
+
+
+}
+
+function changePassword(userID) {
+
+    let password = $('#inputPassword6').val();
+    console.log(password);
+    let userData = {
+        userId: userID,
+        password: password
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/user/ChangePassword",
+        data: userData,
+        success: function (response) {
+            console.log(response);
+            let html = `<div class="alert alert-success w-100" role="alert">
+                            Password Updated successfully
+                        </div>`
+            $('.modal-footer').html(html);
+            setTimeout(() => {
                 location.reload()
             }, 1500);
 

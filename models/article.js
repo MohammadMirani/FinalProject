@@ -1,4 +1,7 @@
 const mongoose = require('mongoose')
+const path = require('path')
+const fs = require('fs')
+
 const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
@@ -34,6 +37,14 @@ const articleSchema = new Schema({
         default: Date.now,
     }
 
+})
+
+articleSchema.post('findOneAndDelete', function (doc, next) {
+
+    fs.unlink(path.join(__dirname, `../public/images/article/${doc.image}`), (err) => {
+        if (err) return next();
+        next();
+    })
 })
 
 
