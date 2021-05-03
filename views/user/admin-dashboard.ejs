@@ -66,11 +66,34 @@
 
         <div class="header-icons-group">
           <div class="c-header-icon logout">
-            <a href="/user/logout" class="link-secondary">Logout <i class="fa fa-power-off"></i></a>
-            </i></div>
+            <a href="" class="link-secondary " data-bs-toggle="modal" data-bs-target="#exampleModal">Logout <i
+              class="fa fa-power-off"></i></a>          </div>
         </div>
       </div>
     </header>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Do you want exit from your account?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a href="/user/logout"> <button type="button" class="btn btn-danger">Log Out </button>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <!-- SlideBar  -->
     <div class="l-sidebar fixed-top bg-dark" style="position: fixed;">
@@ -138,7 +161,7 @@
 
                 <ul class="list-inline m-0">
                   <li class="list-inline-item">
-                    <form action="/article/getSingleArticle/<%= articles[i]._id %>" method="GET" target="_blank">
+                    <form action="/article/getSingleArticle/<%= articles[i]._id %>" method="GET" >
                       <button class="btn btn-primary btn-sm rounded-0" type="submit" data-toggle="tooltip"
                         data-placement="top" title="Read More"><i class="fa fa-table"></i></button>
                     </form>
@@ -151,15 +174,12 @@
                     </form>
                   </li>
                   <li class="list-inline-item">
-                    <form action="/article/deleteSingleArticle/<%= articles[i]._id %>" method="POST"
-                      onsubmit=" return DeleteArticle()">
-                      <button class="btn btn-danger btn-sm rounded-0" type="submit" data-toggle="tooltip"
-                        data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-                    </form>
+                    <button class="btn btn-danger btn-sm rounded-0" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="DeleteArticle(`<%= articles[i]._id %>`)" type="button" data-toggle="tooltip"
+                      data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
                   </li>
                 </ul>
 
-                
+
               </div>
             </div>
 
@@ -358,7 +378,7 @@
 
           <tbody></tbody>
           <% for (let i = 0 ; i< users.length ; i++){ %>
-          <tr data-bs-toggle="modal" data-bs-target="#userModal" onclick="ShowUsers('<%= users[i]._id %>')">
+          <tr data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="ShowUsers('<%= users[i]._id %>')">
             <th scope="row"><%=i+1 %></th>
             <td><%=users[i].firstName %></td>
             <td><%=users[i].lastName %></td>
@@ -372,7 +392,7 @@
           </tbody>
         </table>
 
-        <!-- Modal -->
+        <!-- Modal
         <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -387,7 +407,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
 

@@ -141,6 +141,7 @@ function validAvatar() {
 ////// for admin page
 
 function ShowUsers(userID) {
+    userID = userID;
     $.ajax({
         type: "GET",
         url: `/user/getSingleUser/${userID}`,
@@ -172,6 +173,25 @@ function ShowUsers(userID) {
 
 
 function deleteFun(userID) {
+    userID = userID;
+    let htmlH = ''
+    htmlH = `<h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>`
+    $('.modal-header').html(htmlH);
+
+    let htmlB = '';
+    htmlB = `<p>
+               Are You sure delete this account?
+            </p>`
+    $('.modal-body').html(htmlB);
+    let htmlF = ''
+    htmlF = `<button type="button" class="btn btn-danger" Onclick="deleteUserFun('${userID}')">delete User</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                `;
+    $('.modal-footer').html(htmlF);
+}
+
+function deleteUserFun(userID) {
+
     $.ajax({
         type: "DELETE",
         url: `/user/deleteUser/${userID}`,
@@ -186,6 +206,8 @@ function deleteFun(userID) {
         }
     });
 }
+
+
 
 function resetFun(userID) {
 
@@ -208,16 +230,13 @@ function resetFun(userID) {
     html = `<button type="button" class="btn btn-success" Onclick="changePassword('${userID}')">Reset Password</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
             `;
-
     $('.modal-footer').html(html);
-
 
 }
 
 function changePassword(userID) {
 
     let password = $('#inputPassword6').val();
-    console.log(password);
     let userData = {
         userId: userID,
         password: password
@@ -241,3 +260,40 @@ function changePassword(userID) {
     });
 
 }
+
+function DeleteArticle(articleId) {
+
+    let htmlH = ''
+    htmlH = `<h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>`
+    $('.modal-header').html(htmlH);
+
+    let htmlB = '';
+    htmlB = `<p>
+               Are You sure delete this article?
+            </p>`
+    $('.modal-body').html(htmlB);
+    let htmlF = ''
+    htmlF = `<button type="button" class="btn btn-danger" Onclick="deleteArticleFun('${articleId}')">delete Article</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                `;
+    $('.modal-footer').html(htmlF);
+}
+
+function deleteArticleFun(articleId) {
+
+        $.ajax({
+        type: "DELETE",
+        url: "/article/deleteSingleArticle/"+articleId,
+        success: function () {
+            let html = `<div class="alert alert-success w-100" role="alert">
+                            Article Deleted successfully
+                        </div>`
+            $('.modal-footer').html(html);
+            setTimeout(() => {
+                location.reload()
+            }, 1500);
+
+        }
+    });
+}
+

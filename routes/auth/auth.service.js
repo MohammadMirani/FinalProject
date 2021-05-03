@@ -168,8 +168,9 @@ const createAdmin = async (req, res) => {
 
     try {
         const existAdmin = await User.findOne({
-            userName: req.body.userName
+            role: "admin"
         })
+        if(existAdmin) return res.status(404).send("Not Found")
         let newAdmin = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,

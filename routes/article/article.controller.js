@@ -17,11 +17,11 @@ const {
 Router.get('/createArticlePage', generalTools.loginChecker, createArticlePage)
 Router.post('/createArticle', generalTools.loginChecker, createArticle)
 Router.get('/getSingleArticle/:articleId', getSingleArticle)
-Router.post('/deleteSingleArticle/:articleId', generalTools.loginChecker, deleteSingleArticle)
+Router.delete('/deleteSingleArticle/:articleId', generalTools.loginChecker, deleteSingleArticle)
 Router.get('/editArticlePage/:articleId',generalTools.loginChecker,editArticlePage)
 Router.post('/editArticle/:articleId',generalTools.loginChecker,editArticle)
 Router.get('/getAllArticle',getAllArticle)
-Router.post('/deleteArticleByAdmin/:articleId',generalTools.adminChecker, deleteArticleByAdmin)
+Router.delete('/deleteArticleByAdmin/:articleId',generalTools.adminChecker, deleteArticleByAdmin)
 
 
 

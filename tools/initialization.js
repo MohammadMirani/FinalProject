@@ -2,14 +2,15 @@ const User = require('../models/user')
 const fs = require('fs')
 const path = require('path')
 
-function createAdmin() {
-    User.findOne({
-        role: "superAdmin"
-    }, (err, existSuperAdmin) => {
-        if (err) return console.log("err in creating super admin");
-        if (existSuperAdmin) return console.log("SuperAdmin already exist");
-        const User = require('../models/user')
-        const newUser = new User({
+
+async function createAdmin() {
+
+    try {
+        const existAdmin = await User.findOne({
+            role: "admin"
+        })
+        if (existAdmin) return console.log("Admin already created")
+        const newAdmin = await new User({
             firstName: "admin",
             lastName: "admin",
             userName: "admin",
@@ -17,25 +18,22 @@ function createAdmin() {
             Email: "admin@gmail.com",
             phoneNumber: "0000000",
             sex: "male",
-            role: "superAdmin",
-            avatar :"avatar.png"
-            
+            role: "admin",
+            avatar: "avatar.png"
         })
-
-        newUser.save((err, user) => {
-            if (err) return console.log("error in creating super admin");
-            return console.log(user);
-        })
-    })
-
+        let admin = await newAdmin.save()
+        console.log(admin)
+    } catch(err) {
+        console.log("error in creating admin")
+    }
 }
 
 function existFolder() {
-    const dirImages = path.join(__dirname,'../public/images');
+    const dirImages = path.join(__dirname, '../public/images');
     if (!fs.existsSync(dirImages)) {
         fs.mkdirSync(dirImages);
     }
-    const dirAvatars = path.join(__dirname,'../public/images/avatars');
+    const dirAvatars = path.join(__dirname, '../public/images/avatars');
     if (!fs.existsSync(dirAvatars)) {
         fs.mkdirSync(dirAvatars);
     }

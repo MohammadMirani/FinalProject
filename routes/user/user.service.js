@@ -135,12 +135,13 @@ const changePassword = (req, res) => {
         _id: req.body.userId
     }, {
         password: hash
-    }, (err, doc)=>{
+    }, (err, doc) => {
         if (err) return res.status(500).send("server error")
         return res.status(200).send("Password is updated")
     })
 
 }
+
 
 module.exports = {
     dashboard,

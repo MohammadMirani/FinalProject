@@ -21,9 +21,9 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" > 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <div class="collapse navbar-collapse"  id="navbarResponsive">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <a class="nav-link" href="/article/getallarticle">Home
@@ -31,14 +31,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/auth/loginPage">Sign In</a>
+            <a class="nav-link" href="/user/Dashboard">Dashboard</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/registerPage">Sign up!</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
+
         </ul>
       </div>
     </div>
@@ -66,8 +61,7 @@
             <ul class="list-inline m-0">
               <li class="list-inline-item">
 
-                <form action="/article/getSingleArticle/<%= articles[i]._id %>" method="GET" target="_blank"
-                  class="col-md-2">
+                <form action="/article/getSingleArticle/<%= articles[i]._id %>" method="GET" class="col-md-2">
 
                   <button class="btn btn-primary btn-sm rounded-0" type="submit" data-toggle="tooltip"
                     data-placement="top" title="Read More"><i class="fa fa-table"></i></button>
@@ -75,11 +69,9 @@
               </li>
 
               <li class="list-inline-item">
-                <form action="/article/deleteArticleByAdmin/<%= articles[i]._id %>" method="POST" 
-                  class="col-md-2">
-                  <button class="btn btn-danger btn-sm rounded-0" type="submit" data-toggle="tooltip"
-                    data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-                </form>
+                <button class="btn btn-danger btn-sm rounded-0" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  onclick="DeleteArticleByAdmin(`<%= articles[i]._id %>`)" type="button" data-toggle="tooltip"
+                  data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
               </li>
             </ul>
 
@@ -93,7 +85,27 @@
     <% } %>
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Do you want delete this article?
+          </div>
+          <div class="modal-footer">
+          </div>
+          
+        </div>
+      </div>
+    </div>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/javascripts/admin-allarticle.js"></script>
 </body>
 
 </html>

@@ -68,7 +68,7 @@ const getSingleArticle = (req, res) => {
                         comment
                     })
                 } else {
-                    return res.render('article/articlePage', {
+                    return res.render('article/users-articlePage', {
                         user,
                         article,
                         comment
@@ -82,10 +82,7 @@ const getSingleArticle = (req, res) => {
                     comment
                 })
             }
-
-
         })
-
     })
 }
 
@@ -94,7 +91,7 @@ const deleteSingleArticle = (req, res) => {
         _id: req.params.articleId
     }, (err, deletedArticle) => {
         if (err) return res.status(500).send("server error :(")
-        return res.redirect('/user/dashboard')
+        return res.send('successfully delete article')
     })
 }
 const editArticlePage = (req, res) => {
@@ -148,7 +145,7 @@ const getAllArticle = (req, res) => {
                     articles
                 })
             } else {
-                return res.render('article/allarticle', {
+                return res.render('article/users-allarticle', {
                     articles
                 })
             }
@@ -166,7 +163,7 @@ const deleteArticleByAdmin = (req, res) => {
         _id: req.params.articleId
     }, (err, deletedArticle) => {
         if (err) return res.status(500).send("server error :(")
-        return res.redirect('/article/getAllArticle')
+        return res.send("deleted article was successful")
     })
 }
 
